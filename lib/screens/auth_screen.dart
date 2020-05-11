@@ -10,12 +10,43 @@ enum AuthMode { LOGIN, REGISTER }
 
 class _AuthScreenState extends State<AuthScreen> {
   double screenHeight;
+  final _formLogin = GlobalKey<FormState>();
+  final _formRegister = GlobalKey<FormState>();
 
+  //login focus nodes
+  final _loginPasswordFocusNode = FocusNode();
+
+  //register focus nodes
+  final _registerEmailFocusNode = FocusNode();
+  final _registerPasswordFocusNode = FocusNode();
+  final _registerPasswordConfirmationFocusNode = FocusNode();
+
+
+  //register passwrod controller
+  final _registerPasswordController = TextEditingController();
+
+  //submit login function
+  Future<void> _submitLogin() async{
+    if(!_formLogin.currentState.validate()){
+      return;
+    }
+  }
+
+  //submit register function
+  Future<void> _submitRegister() async{
+    if(!_formRegister.currentState.validate()){
+      return;
+    }
+  }
+
+
+  //page view controller
   PageController _pageController = PageController(
     initialPage: 0,
     viewportFraction: 1.0,
   );
 
+  //navigate between pageView screens functions
   gotoLogin() {
     _pageController.animateToPage(
       0,
@@ -112,20 +143,43 @@ class _AuthScreenState extends State<AuthScreen> {
                     height: 15,
                   ),
                   Form(
+                    key: _formLogin,
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value){
+                            if (value.isEmpty || !value.contains('@')) {
+                              return 'Invalid email!';
+                            }
+                            return null;
+                          },
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(_loginPasswordFocusNode);
+                          },
                           decoration: InputDecoration(
-                            labelText: "Your Email",
+                            labelText: "Email",
                           ),
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         TextFormField(
+                          textInputAction: TextInputAction.done,
+                          focusNode: _loginPasswordFocusNode,
+                          obscureText: true,
+                          validator: (value){
+                            if(value.isEmpty){
+                              return 'please enter password';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             labelText: "Password",
                           ),
+
+
                         ),
                       ],
                     ),
@@ -145,7 +199,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       padding: EdgeInsets.only(top: 12, bottom: 12),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      onPressed: () {},
+                      onPressed: _submitLogin,
                     ),
                   ),
                   Row(
@@ -216,6 +270,8 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  //register widget
+
   Widget singUpCard(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -247,50 +303,159 @@ class _AuthScreenState extends State<AuthScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Your Name",
+                    Form(
+                      key: _formRegister,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: "Your Name",
+                            ),
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context)
+                                  .requestFocus(_registerEmailFocusNode);
+                            },
+                            validator: (value){
+                              if(value.isEmpty){
+                                return 'Please enter your name';
+                              }
+                              return null;
+                            },
+
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: "Your Email",
+                            ),
+                            focusNode: _registerEmailFocusNode,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context)
+                                  .requestFocus(_registerPasswordFocusNode);
+                            },
+                            validator: (value){
+                              if(value.isEmpty){
+                                return 'please enter an email';
+                              }
+                              if(!value.contains('@')){
+                                return 'please enter a valid email';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            textInputAction: TextInputAction.next,
+                            focusNode: _registerPasswordFocusNode,
+                            controller: _registerPasswordController,
+                            decoration: InputDecoration(
+                              labelText: "Password",
+                            ),
+                            validator: (value){
+                              if(value.length < 8){
+                                return 'password is too short';
+                              }
+                              if(value.isEmpty){
+                                return 'please enter password';
+                              }
+                              return null;
+                            },
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context)
+                                  .requestFocus(_registerPasswordConfirmationFocusNode);
+                            },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            focusNode: _registerPasswordConfirmationFocusNode,
+                            textInputAction: TextInputAction.done,
+                            decoration: InputDecoration(
+                              labelText: "password confirmation",
+                            ),
+                            validator: (value){
+                              if(value != _registerPasswordController.text){
+                                return 'please enter same passwordas above';
+                              }
+                              if(value.length <8 ){
+                                return 'password is too short';
+                              }
+                              if(value.isEmpty){
+                                return 'please enter password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 25,
                     ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Your Email",
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: FlatButton(
+                        child: Text(
+                          "Register",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        color: Colors.grey,
+                        textColor: Colors.white,
+                        padding: EdgeInsets.only(top: 12, bottom: 12),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: _submitRegister,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      height: 5,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Expanded(
-                          child: Container(),
+                          child: new Container(
+                              margin:
+                              const EdgeInsets.only(left: 10.0, right: 20.0),
+                              child: Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
                         ),
-                        FlatButton(
-                          child: Text("Sign Up"),
-                          color: Color(0xFF4B9DFE),
-                          textColor: Colors.white,
-                          padding: EdgeInsets.only(
-                              left: 38, right: 38, top: 15, bottom: 15),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          onPressed: () {},
+                        Text("OR"),
+                        Expanded(
+                          child: new Container(
+                              margin:
+                              const EdgeInsets.only(left: 20.0, right: 10.0),
+                              child: Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
                         ),
                       ],
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: FlatButton(
+                        child: Icon(
+                          FontAwesomeIcons.google,
+                          size: 20,
+                        ),
+                        color: Colors.grey,
+                        textColor: Colors.white,
+                        padding: EdgeInsets.only(
+                          top: 12,
+                          bottom: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed:gotoRegister,
+                      ),
                     ),
                   ],
                 ),
