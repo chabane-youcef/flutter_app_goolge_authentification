@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1049169689735",
+    "firebase_url": "https://djo-shop.firebaseio.com",
+    "project_id": "djo-shop",
+    "storage_bucket": "djo-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049169689735:android:3f1484b4a64a70b0540c22",
+        "android_client_info": {
+          "package_name": "com.chabaneyoucef.googleauthentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049169689735-jt83rp4le5b3dqe5mj6tqrm9osnln87c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chabaneyoucef.googleauthentication",
+            "certificate_hash": "4048241e652d6df441b6c917826e7b0c20d57532"
+          }
+        },
+        {
+          "client_id": "1049169689735-2c6tumup79fcvh788s75di45mciaccg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhcefUUWfQC4uLgY6OK0UWO3kZktVZOqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049169689735-2c6tumup79fcvh788s75di45mciaccg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

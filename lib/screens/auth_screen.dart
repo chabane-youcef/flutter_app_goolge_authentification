@@ -21,24 +21,22 @@ class _AuthScreenState extends State<AuthScreen> {
   final _registerPasswordFocusNode = FocusNode();
   final _registerPasswordConfirmationFocusNode = FocusNode();
 
-
   //register passwrod controller
   final _registerPasswordController = TextEditingController();
 
   //submit login function
-  Future<void> _submitLogin() async{
-    if(!_formLogin.currentState.validate()){
+  Future<void> _submitLogin() async {
+    if (!_formLogin.currentState.validate()) {
       return;
     }
   }
 
   //submit register function
-  Future<void> _submitRegister() async{
-    if(!_formRegister.currentState.validate()){
+  Future<void> _submitRegister() async {
+    if (!_formRegister.currentState.validate()) {
       return;
     }
   }
-
 
   //page view controller
   PageController _pageController = PageController(
@@ -149,14 +147,15 @@ class _AuthScreenState extends State<AuthScreen> {
                         TextFormField(
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
-                          validator: (value){
+                          validator: (value) {
                             if (value.isEmpty || !value.contains('@')) {
                               return 'Invalid email!';
                             }
                             return null;
                           },
                           onFieldSubmitted: (_) {
-                            FocusScope.of(context).requestFocus(_loginPasswordFocusNode);
+                            FocusScope.of(context)
+                                .requestFocus(_loginPasswordFocusNode);
                           },
                           decoration: InputDecoration(
                             labelText: "Email",
@@ -169,8 +168,8 @@ class _AuthScreenState extends State<AuthScreen> {
                           textInputAction: TextInputAction.done,
                           focusNode: _loginPasswordFocusNode,
                           obscureText: true,
-                          validator: (value){
-                            if(value.isEmpty){
+                          validator: (value) {
+                            if (value.isEmpty) {
                               return 'please enter password';
                             }
                             return null;
@@ -178,8 +177,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           decoration: InputDecoration(
                             labelText: "Password",
                           ),
-
-
                         ),
                       ],
                     ),
@@ -240,7 +237,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      onPressed:gotoRegister,
+                      onPressed: gotoRegister,
                     ),
                   ),
                 ],
@@ -317,13 +314,12 @@ class _AuthScreenState extends State<AuthScreen> {
                               FocusScope.of(context)
                                   .requestFocus(_registerEmailFocusNode);
                             },
-                            validator: (value){
-                              if(value.isEmpty){
+                            validator: (value) {
+                              if (value.isEmpty) {
                                 return 'Please enter your name';
                               }
                               return null;
                             },
-
                           ),
                           SizedBox(
                             height: 15,
@@ -339,18 +335,18 @@ class _AuthScreenState extends State<AuthScreen> {
                               FocusScope.of(context)
                                   .requestFocus(_registerPasswordFocusNode);
                             },
-                            validator: (value){
-                              if(value.isEmpty){
+                            validator: (value) {
+                              if (value.isEmpty) {
                                 return 'please enter an email';
                               }
-                              if(!value.contains('@')){
+                              if (!value.contains('@')) {
                                 return 'please enter a valid email';
                               }
                               return null;
                             },
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 15,
                           ),
                           TextFormField(
                             textInputAction: TextInputAction.next,
@@ -359,22 +355,22 @@ class _AuthScreenState extends State<AuthScreen> {
                             decoration: InputDecoration(
                               labelText: "Password",
                             ),
-                            validator: (value){
-                              if(value.length < 8){
+                            validator: (value) {
+                              if (value.length < 8) {
                                 return 'password is too short';
                               }
-                              if(value.isEmpty){
+                              if (value.isEmpty) {
                                 return 'please enter password';
                               }
                               return null;
                             },
                             onFieldSubmitted: (_) {
-                              FocusScope.of(context)
-                                  .requestFocus(_registerPasswordConfirmationFocusNode);
+                              FocusScope.of(context).requestFocus(
+                                  _registerPasswordConfirmationFocusNode);
                             },
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 15,
                           ),
                           TextFormField(
                             focusNode: _registerPasswordConfirmationFocusNode,
@@ -382,14 +378,14 @@ class _AuthScreenState extends State<AuthScreen> {
                             decoration: InputDecoration(
                               labelText: "password confirmation",
                             ),
-                            validator: (value){
-                              if(value != _registerPasswordController.text){
+                            validator: (value) {
+                              if (value != _registerPasswordController.text) {
                                 return 'please enter same passwordas above';
                               }
-                              if(value.length <8 ){
+                              if (value.length < 8) {
                                 return 'password is too short';
                               }
-                              if(value.isEmpty){
+                              if (value.isEmpty) {
                                 return 'please enter password';
                               }
                               return null;
@@ -420,8 +416,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       children: <Widget>[
                         Expanded(
                           child: new Container(
-                              margin:
-                              const EdgeInsets.only(left: 10.0, right: 20.0),
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 20.0),
                               child: Divider(
                                 color: Colors.black,
                                 height: 36,
@@ -430,8 +426,8 @@ class _AuthScreenState extends State<AuthScreen> {
                         Text("OR"),
                         Expanded(
                           child: new Container(
-                              margin:
-                              const EdgeInsets.only(left: 20.0, right: 10.0),
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 10.0),
                               child: Divider(
                                 color: Colors.black,
                                 height: 36,
@@ -454,7 +450,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed:gotoRegister,
+                        onPressed: gotoRegister,
                       ),
                     ),
                   ],
@@ -485,25 +481,25 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  Widget pageTitle() {
-    return Container(
-      margin: EdgeInsets.only(top: 70),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.airline_seat_legroom_normal,
-            size: 48,
-            color: Colors.white,
-          ),
-          Text(
-            "Djo..",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
-          )
-        ],
-      ),
-    );
-  }
+//  Widget pageTitle() {
+//    return Container(
+//      margin: EdgeInsets.only(top: 70),
+//      child: Row(
+//        crossAxisAlignment: CrossAxisAlignment.center,
+//        mainAxisAlignment: MainAxisAlignment.center,
+//        children: <Widget>[
+//          Icon(
+//            Icons.airline_seat_legroom_normal,
+//            size: 48,
+//            color: Colors.white,
+//          ),
+//          Text(
+//            "Djo..",
+//            style: TextStyle(
+//                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+//          )
+//        ],
+//      ),
+//    );
+//  }
 }
