@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               Provider.of<Auth>(context, listen: false).signOutgoogle();
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return HomeScreen();
+                return AuthScreen();
               }));
             },
           ),
