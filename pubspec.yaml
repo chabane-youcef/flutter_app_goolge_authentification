@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^0.1.3
   font_awesome_flutter: any
   http: ^0.12.1
+  provider: ^4.0.5+1
   firebase_auth: ^0.16.0
   google_sign_in: ^4.4.6
 

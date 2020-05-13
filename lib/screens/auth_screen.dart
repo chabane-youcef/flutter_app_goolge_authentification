@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+
+//providers import
+import '../providers/auth.dart';
+
+import './home_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -237,7 +243,15 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      onPressed: gotoRegister,
+                      onPressed: (){
+                        Provider.of<Auth>(context, listen: false).signInWithGoogle().whenComplete((){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context){
+                              return HomeScreen();
+                            }
+                          ));
+                        });
+                      }
                     ),
                   ),
                 ],
